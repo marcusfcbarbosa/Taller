@@ -17,7 +17,7 @@ namespace Taller.Web.Services
     public class AuthService : Service, IAuthService
     {
         private readonly HttpClient _httpClient;
-        private readonly AppSettings _settings;
+        
         public AuthService(HttpClient httpClient,
             IOptions<AppSettings> settings)
         {
