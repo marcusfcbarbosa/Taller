@@ -30,6 +30,7 @@ namespace Taller.Identity.Api.Controllers
             _userManager = userManager;
             _appSettings = appSettings.Value;
         }
+
         [HttpPost("authenticate")]
         public async Task<ActionResult> Login(UserLogin userLogin)
         {
@@ -42,6 +43,7 @@ namespace Taller.Identity.Api.Controllers
             AddErrorProcessing(ReturnsReasonBlocking(result));
             return CustomResponse();
         }
+
         [HttpPost("register")]
         public async Task<ActionResult> Register(UserRegistration userRegistration)
         {
@@ -75,9 +77,9 @@ namespace Taller.Identity.Api.Controllers
             var claims = await _userManager.GetClaimsAsync(user);
             var identityClaims = await GetUserClaims(claims, user);
             var encodedToken = EncodeToken(identityClaims);
-            return ObterRespostaToken(encodedToken, user, claims);
+            return GetResponseToken(encodedToken, user, claims);
         }
-        private UserResponseLogin ObterRespostaToken(string encodedToken, IdentityUser user, IEnumerable<Claim> claims)
+        private UserResponseLogin GetResponseToken(string encodedToken, IdentityUser user, IEnumerable<Claim> claims)
         {
             return new UserResponseLogin
             {
