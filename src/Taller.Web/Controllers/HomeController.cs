@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+using Taller.Core.Identity;
 using Taller.Web.Models;
+using Taller.Web.Services;
 
 namespace Taller.Web.Controllers
 {

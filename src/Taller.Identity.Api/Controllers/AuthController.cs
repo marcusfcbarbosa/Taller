@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -76,7 +75,6 @@ namespace Taller.Identity.Api.Controllers
             var claims = await _userManager.GetClaimsAsync(user);
             var identityClaims = await GetUserClaims(claims, user);
             var encodedToken = EncodeToken(identityClaims);
-
             return ObterRespostaToken(encodedToken, user, claims);
         }
         private UserResponseLogin ObterRespostaToken(string encodedToken, IdentityUser user, IEnumerable<Claim> claims)

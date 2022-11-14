@@ -8,7 +8,7 @@ using Taller.Identity.Api.Data;
 
 namespace Taller.Identity.Api.Migrations
 {
-    [DbContext(typeof(TallerDBContext))]
+    [DbContext(typeof(TallerDBIdentityContext))]
     partial class TallerDBContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

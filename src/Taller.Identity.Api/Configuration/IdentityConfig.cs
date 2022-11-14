@@ -12,12 +12,12 @@ namespace Taller.Identity.Api.Configuration
         public static IServiceCollection AddIdentityConfiguration(this IServiceCollection services,
             IConfiguration configuration)
         {
-            services.AddDbContext<TallerDBContext>(optionsAction: options
+            services.AddDbContext<TallerDBIdentityContext>(optionsAction: options
                   => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDefaultIdentity<IdentityUser>()
                 .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<TallerDBContext>()
+                .AddEntityFrameworkStores<TallerDBIdentityContext>()
                 .AddDefaultTokenProviders();
             services.AddJWTConfiguration(configuration);
             return services;
