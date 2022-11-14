@@ -7,16 +7,16 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
 WORKDIR /src
-COPY ["src/Talller.Web/Talller.Web.csproj", "src/Talller.Web/"]
-RUN dotnet restore "src/Talller.Web/Talller.Web.csproj"
+COPY ["src/Taller.Web/Taller.Web.csproj", "src/Taller.Web/"]
+RUN dotnet restore "src/Taller.Web/Taller.Web.csproj"
 COPY . .
-WORKDIR "/src/src/Talller.Web"
-RUN dotnet build "Talller.Web.csproj" -c Release -o /app/build
+WORKDIR "/src/src/Taller.Web"
+RUN dotnet build "Taller.Web.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "Talller.Web.csproj" -c Release -o /app/publish
+RUN dotnet publish "Taller.Web.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Talller.Web.dll"]
+ENTRYPOINT ["dotnet", "Taller.Web.dll"]

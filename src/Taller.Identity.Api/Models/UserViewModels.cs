@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Taller.Core.Communications;
 
 namespace Taller.Identity.Api.Models
 {
@@ -31,6 +32,8 @@ namespace Taller.Identity.Api.Models
         public string AccessToken { get; set; }
         public double ExpiresIn { get; set; }
         public UserToken UsuarioToken { get; set; }
+
+        public ResponseResult ResponseResult { get; set; }
     }
 
     public class UserToken

@@ -31,7 +31,19 @@ namespace Taller.Identity.Api.Controllers
             _userManager = userManager;
             _appSettings = appSettings.Value;
         }
-        [HttpPost("new-account")]
+        [HttpPost("authenticate")]
+        public async Task<ActionResult> Login(UserLogin userLogin)
+        {
+            if (!ModelState.IsValid) return CustomResponse(ModelState);
+            var result = await _signInManager.PasswordSignInAsync(userName: userLogin.Email, password: userLogin.Password, isPersistent: false, lockoutOnFailure: true);
+            if (result.Succeeded)
+            {
+                return CustomResponse(await GenerateJwt(userLogin.Email));
+            }
+            AddErrorProcessing(ReturnsReasonBlocking(result));
+            return CustomResponse();
+        }
+        [HttpPost("register")]
         public async Task<ActionResult> Register(UserRegistration userRegistration)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
@@ -51,6 +63,13 @@ namespace Taller.Identity.Api.Controllers
         }
 
         #region "Private"
+        private string ReturnsReasonBlocking(Microsoft.AspNetCore.Identity.SignInResult result)
+        {
+            if (result.IsLockedOut) return "User is blocked for invalid attempts";
+            if (result.IsNotAllowed) return "User is not authorized";
+            if (result.RequiresTwoFactor) return "Requires two-step authentication";
+            return "Unrecognized username or password";
+        }
         private async Task<UserResponseLogin> GenerateJwt(string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
