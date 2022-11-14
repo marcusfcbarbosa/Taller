@@ -26,7 +26,7 @@ namespace Taller.Identity.Api.Models
         [StringLength(100, ErrorMessage = "Field {0} must be between {2} and {1} characters", MinimumLength = 6)]
         public string Password { get; set; }
     }
-    public class UsuarioRespostaLogin
+    public class UserResponseLogin
     {
         public string AccessToken { get; set; }
         public double ExpiresIn { get; set; }
@@ -37,10 +37,10 @@ namespace Taller.Identity.Api.Models
     {
         public string Id { get; set; }
         public string Email { get; set; }
-        public IEnumerable<UsuarioClaim> Claims { get; set; }
+        public IEnumerable<UserClaim> Claims { get; set; }
     }
 
-    public class UsuarioClaim
+    public class UserClaim
     {
         public string Value { get; set; }
         public string Type { get; set; }
