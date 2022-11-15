@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Taller.Api\Taller.Api.csproj" />
     <ProjectReference Include="..\Taller.Identity.Api\Taller.Identity.Api.csproj" />
   </ItemGroup>
 
