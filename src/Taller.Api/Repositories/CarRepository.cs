@@ -35,12 +35,12 @@ namespace Taller.Api.Repositories
             var multi = await _context.Database.GetDbConnection()
                 .QueryMultipleAsync(sql, new { Nome = query });
 
-            var produtos = multi.Read<Car>();
+            var cars = multi.Read<Car>();
             var total = multi.Read<int>().FirstOrDefault();
 
             return new PagedResult<Car>()
             {
-                List = produtos,
+                List = cars,
                 TotalResults = total,
                 PageIndex = pageIndex,
                 PageSize = pageSize,
