@@ -113,17 +113,18 @@ namespace Taller.Identity.Api.Controllers
         }
         private string EncodeToken(ClaimsIdentity identityClaims)
         {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
-            var token = tokenHandler.CreateToken(new SecurityTokenDescriptor
-            {
-                Issuer = _appSettings.Issuer,
-                Audience = _appSettings.ValidOn,
-                Subject = identityClaims,
-                Expires = DateTime.UtcNow.AddHours(_appSettings.ExpirationHours),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            });
-            return tokenHandler.WriteToken(token);
+            
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var token = tokenHandler.CreateToken(new SecurityTokenDescriptor
+                {
+                    Issuer = _appSettings.Issuer,
+                    Audience = _appSettings.ValidOn,
+                    Subject = identityClaims,
+                    Expires = DateTime.UtcNow.AddHours(_appSettings.ExpirationHours),
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_appSettings.Secret)),
+                    SecurityAlgorithms.HmacSha256Signature)
+                });
+                return tokenHandler.WriteToken(token);
         }
 
         private static long ToUnixEpochDate(DateTime date)

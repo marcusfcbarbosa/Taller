@@ -46,7 +46,6 @@ namespace Taller.Web.Services
                 var response = await _httpClient.PostAsync(requestUri: $"/api/identity/register", content: registroContent);
                 if (!HandleErrorsResponse(response))
                 {
-                    var teste = await DeserializeResponseObject<ResponseResult>(response);
                     return new UserResponseLogin
                     {
                         ResponseResult = await DeserializeResponseObject<ResponseResult>(response)

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Logging;
 using Taller.Core.Identity;
 
 namespace Taller.Identity.Api.Configuration
@@ -30,6 +31,7 @@ namespace Taller.Identity.Api.Configuration
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                IdentityModelEventSource.ShowPII = true;
             }
 
             app.UseHttpsRedirection();

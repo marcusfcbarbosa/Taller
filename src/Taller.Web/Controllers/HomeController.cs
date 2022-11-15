@@ -47,7 +47,7 @@ namespace Taller.Web.Controllers
             {
                 await LogIn(result);
                 if (string.IsNullOrEmpty(returnUrl))
-                    return RedirectToAction(actionName: "Chat", controllerName: "Home");
+                    return RedirectToAction(actionName: "taller", controllerName: "Home");
                 return LocalRedirect(returnUrl);
             }
             return View(userLogin);
@@ -61,7 +61,7 @@ namespace Taller.Web.Controllers
             var result = await _authenticationService.Register(userRegister);
             if (ResponseHasErrors(result.ResponseResult)) return View(userRegister);
             await LogIn(result);
-            return RedirectToAction(actionName: "Chat", controllerName: "Home");
+            return RedirectToAction(actionName: "taller", controllerName: "Home");
         }
         [HttpGet]
         [Route("register")]
@@ -71,9 +71,9 @@ namespace Taller.Web.Controllers
         }
 
         [HttpGet]
-        [Route("chat")]
+        [Route("taller")]
         [Authorize]
-        public async Task<IActionResult> Chat()
+        public async Task<IActionResult> Taller()
         {
             return View(_aspNetUser);
         }
