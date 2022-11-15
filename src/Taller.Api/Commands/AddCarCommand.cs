@@ -26,13 +26,16 @@ namespace Taller.Api.Commands
             public AddCarValidation()
             {
                 RuleFor(c => c.Make)
+                    .NotEmpty()
                     .NotNull()
                     .WithMessage("Invalid value Make");
                 RuleFor(c => c.Model)
+                    .NotEmpty()
                     .NotNull()
                     .WithMessage("Invalid value  Model");
 
                 RuleFor(c => c.Color)
+                    .NotEmpty()
                     .NotNull()
                     .WithMessage("Invalid Color value");
 
