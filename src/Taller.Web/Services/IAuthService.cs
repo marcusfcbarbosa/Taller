@@ -40,16 +40,25 @@ namespace Taller.Web.Services
 
         public async Task<UserResponseLogin> Register(UserRegistration userRegister)
         {
-            var registroContent = GetContent(userRegister);
-            var response = await _httpClient.PostAsync(requestUri: $"/api/identity/register", content: registroContent);
-            if (!HandleErrorsResponse(response))
+            try
             {
-                return new UserResponseLogin
+                var registroContent = GetContent(userRegister);
+                var response = await _httpClient.PostAsync(requestUri: $"/api/identity/register", content: registroContent);
+                if (!HandleErrorsResponse(response))
                 {
-                    ResponseResult = await DeserializeResponseObject<ResponseResult>(response)
-                };
+                    var teste = await DeserializeResponseObject<ResponseResult>(response);
+                    return new UserResponseLogin
+                    {
+                        ResponseResult = await DeserializeResponseObject<ResponseResult>(response)
+                    };
+                }
+                return await DeserializeResponseObject<UserResponseLogin>(response);
             }
-            return await DeserializeResponseObject<UserResponseLogin>(response);
+            catch (Exception e) {
+
+                throw e;
+            }
+
         }
     }
 }

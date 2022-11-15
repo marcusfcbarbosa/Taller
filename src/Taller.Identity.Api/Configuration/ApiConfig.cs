@@ -12,6 +12,16 @@ namespace Taller.Identity.Api.Configuration
         public static IServiceCollection AddApiConfiguration(this IServiceCollection services)
         {
             services.AddControllers();
+            services.AddScoped<IAspNetUser, AspNetUser>();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("Full_Access",
+                    builder =>
+                        builder
+                            .AllowAnyOrigin()
+                            .AllowAnyMethod()
+                            .AllowAnyHeader());
+            });
             return services;
         }
         public static IApplicationBuilder AddApplication(this IApplicationBuilder app,
@@ -23,9 +33,8 @@ namespace Taller.Identity.Api.Configuration
             }
 
             app.UseHttpsRedirection();
-
             app.UseRouting();
-
+            app.UseCors("Full_Access");
             app.UseAuthConfiguration();
 
             app.UseEndpoints(endpoints =>

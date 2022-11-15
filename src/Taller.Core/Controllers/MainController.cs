@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Collections.Generic;
 using System.Linq;
+using Taller.Core.Communications;
 
 namespace Taller.Core.Controllers
 {
@@ -22,7 +23,6 @@ namespace Taller.Core.Controllers
                 { "Messages", Erros.ToArray() }
             }));
         }
-
         protected ActionResult CustomResponse(ModelStateDictionary modelState)
         {
             var erros = modelState.Values.SelectMany(e => e.Errors);
