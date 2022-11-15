@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Taller.Api.Data;
 using Taller.Api.Entities;
+using Taller.Core.Data;
 using Taller.Core.Extensions;
 using Taller.Core.Interfaces;
 
@@ -22,6 +23,7 @@ namespace Taller.Api.Repositories
         {
             _context = context;
         }
+        public IUnitOfWork UnitOfWork => _context;
         public async Task<PagedResult<Car>> GetAllCarsPaged(int pageSize, int pageIndex, string query = null)
         {
             var sql = @$"SELECT * FROM Cars 
