@@ -12,5 +12,7 @@ namespace Taller.Core.Interfaces
         Task<T> GetById(Guid id);
         void Add(T entity);
         Task Update(T entity);
+
+        Task DeleteById(Guid id);
     }
 }

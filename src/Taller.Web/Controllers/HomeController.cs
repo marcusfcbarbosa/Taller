@@ -66,6 +66,7 @@ namespace Taller.Web.Controllers
             await LogIn(result);
             return RedirectToAction(actionName: "taller", controllerName: "Home");
         }
+
         [HttpGet]
         [Route("register")]
         public async Task<IActionResult> Register()
@@ -78,13 +79,25 @@ namespace Taller.Web.Controllers
         [Authorize]
         public async Task<IActionResult> Taller([FromQuery] int ps = 8, [FromQuery] int page = 1, [FromQuery] string q = null)
         {
-            
             return View(new ListCarModel
             {
                 aspNetUser = _aspNetUser,
                 cars = await _carService.GetAllCarsPaged(ps, page, q)
             });
         }
+
+        [HttpGet]
+        [Route("delete/{id}")]
+        [Authorize]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+             await _carService.Delete(id);
+            return RedirectToAction(actionName: "taller", controllerName: "Home");
+
+        }
+
+
+
 
         [HttpGet]
         [Route("logout")]

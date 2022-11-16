@@ -15,6 +15,7 @@ namespace Taller.Web.Services
     {
         Task<PagedResult<CarModel>> GetAllCarsPaged(int pageSize, int pageIndex, string query = null);
         Task<ResponseResult> Add(AddCarCommand command);
+        Task<ResponseResult> Delete(Guid Id);
     }
 
     public class CarService : Service, ICarService
@@ -31,6 +32,13 @@ namespace Taller.Web.Services
         {
             var content = GetContent(command);
             var response = await _httpClient.PostAsync("/api/cars/create", content);
+            if (!HandleErrorsResponse(response)) return await DeserializeResponseObject<ResponseResult>(response);
+            return ReturnOk();
+        }
+
+        public async Task<ResponseResult> Delete(Guid Id)
+        {
+            var response = await _httpClient.DeleteAsync($"/api/cars/delete/{Id}");
             if (!HandleErrorsResponse(response)) return await DeserializeResponseObject<ResponseResult>(response);
             return ReturnOk();
         }

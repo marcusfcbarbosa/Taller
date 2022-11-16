@@ -53,12 +53,10 @@ namespace Taller.Api.Repositories
         {
             _context.Cars.Add(entity);
         }
-
         public async Task Update(Car entity)
         {
             _context.Cars.Update(entity);
         }
-
         public void Dispose()
         {
             _context?.Dispose();
@@ -70,6 +68,12 @@ namespace Taller.Api.Repositories
         public async Task<IEnumerable<Car>> GetAll()
         {
             return await _context.Cars.AsNoTracking().ToListAsync();
+        }
+
+        public async Task DeleteById(Guid id)
+        {
+            var car = await _context.Cars.FindAsync(id);
+            _context.Remove(car);
         }
     }
 }

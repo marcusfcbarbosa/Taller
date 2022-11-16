@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 using Taller.Api.Commands;
 using Taller.Api.Entities;
@@ -30,11 +31,19 @@ namespace Taller.Api.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<IActionResult> Post([FromServices] IMediator _mediator, AddCarCommand command)
+        public async Task<IActionResult> Post([FromServices] IMediator _mediator,
+            AddCarCommand command)
         {
-            
             return CustomResponse(await _mediator.Send(command));
         }
+
+        [HttpDelete("delete/{id}")]
+        public async Task<IActionResult> Delete([FromServices] IMediator _mediator, Guid id)
+        {
+            return CustomResponse(await _mediator.Send(new DeleteCarCommand { Id = id}));
+        }
+
+
     }
 
 }
