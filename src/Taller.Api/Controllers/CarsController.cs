@@ -10,6 +10,7 @@ using Taller.Core.Extensions;
 
 namespace Taller.Api.Controllers
 {
+    [Route("api/cars")]
     [Authorize]
     public class CarsController : MainController
     {
@@ -20,7 +21,7 @@ namespace Taller.Api.Controllers
             _carRepository = carRepository;
         }
 
-        [HttpGet("cars")]
+        [HttpGet("all")]
         public async Task<PagedResult<Car>> Get([FromQuery] int ps = 8,
                                                       [FromQuery] int page = 1,
                                                       [FromQuery] string q = null)
@@ -28,7 +29,7 @@ namespace Taller.Api.Controllers
             return await _carRepository.GetAllCarsPaged(ps, page, q);
         }
 
-        [HttpPost("cars")]
+        [HttpPost("create")]
         public async Task<IActionResult> Post([FromServices] IMediator _mediator, AddCarCommand command)
         {
             

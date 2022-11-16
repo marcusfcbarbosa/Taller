@@ -32,7 +32,7 @@ namespace Taller.Web.Configuration
             app.UseRouting();
 
             app.UseIdentityConfiguration();
-            //app.UseMiddleware<ExceptionMiddleware>();
+            app.UseMiddleware<ExceptionMiddleware>();
             var supportedCultures = new[] { new CultureInfo("pt-BR") };
             app.UseRequestLocalization(new RequestLocalizationOptions
             {

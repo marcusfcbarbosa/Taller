@@ -18,10 +18,8 @@ namespace Taller.Web.Configuration
         }
         public static void UseIdentityConfiguration(this IApplicationBuilder app)
         {
-
             app.UseAuthentication();
             app.UseAuthorization();
-
         }
     }
 }

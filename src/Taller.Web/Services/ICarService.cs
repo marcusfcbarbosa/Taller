@@ -5,15 +5,15 @@ using System.Threading.Tasks;
 using Taller.Api.Entities;
 using Taller.Core.Communications;
 using Taller.Core.Extensions;
-using Taller.Core.Interfaces;
 using Taller.Web.Commands;
 using Taller.Web.Extensions;
+using Taller.Web.Models;
 
 namespace Taller.Web.Services
 {
     public interface ICarService
     {
-        Task<PagedResult<Car>> GetAllCarsPaged(int pageSize, int pageIndex, string query = null);
+        Task<PagedResult<CarModel>> GetAllCarsPaged(int pageSize, int pageIndex, string query = null);
         Task<ResponseResult> Add(AddCarCommand command);
     }
 
@@ -30,16 +30,16 @@ namespace Taller.Web.Services
         public async Task<ResponseResult> Add(AddCarCommand command)
         {
             var content = GetContent(command);
-            var response = await _httpClient.PostAsync("/cliente/endereco/", content);
+            var response = await _httpClient.PostAsync("/api/cars/create", content);
             if (!HandleErrorsResponse(response)) return await DeserializeResponseObject<ResponseResult>(response);
             return ReturnOk();
         }
 
-        public async Task<PagedResult<Car>> GetAllCarsPaged(int pageSize, int pageIndex, string query = null)
+        public async Task<PagedResult<CarModel>> GetAllCarsPaged(int pageSize, int pageIndex, string query = null)
         {
-            var response = await _httpClient.GetAsync($"/catalogo/produtos?ps={pageSize}&page={pageIndex}&q={query}");
+            var response = await _httpClient.GetAsync($"/api/cars/all?ps={pageSize}&page={pageIndex}&q={query}");
             HandleErrorsResponse(response);
-            return await DeserializeResponseObject<PagedResult<Car>>(response);
+            return await DeserializeResponseObject<PagedResult<CarModel>>(response);
         }
 
     }

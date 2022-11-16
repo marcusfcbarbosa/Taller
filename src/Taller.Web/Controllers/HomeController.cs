@@ -10,6 +10,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Taller.Core.Identity;
 using Taller.Identity.Api.Models;
+using Taller.Web.Models;
 using Taller.Web.Services;
 
 namespace Taller.Web.Controllers
@@ -17,14 +18,16 @@ namespace Taller.Web.Controllers
     public class HomeController : MainController
     {
         private readonly ILogger<HomeController> _logger;
-
         private readonly IAuthService _authenticationService;
-        private readonly IAspNetUser _aspNetUser;
-
-        public HomeController(IAuthService authenticationService, IAspNetUser aspNetUser)
+        private IAspNetUser _aspNetUser;
+        private readonly ICarService _carService;
+        public HomeController(IAuthService authenticationService,
+                              IAspNetUser aspNetUser,
+                              ICarService carService)
         {
             _authenticationService = authenticationService;
             _aspNetUser = aspNetUser;
+            _carService = carService;
         }
 
         public IActionResult Index()
@@ -73,9 +76,14 @@ namespace Taller.Web.Controllers
         [HttpGet]
         [Route("taller")]
         [Authorize]
-        public async Task<IActionResult> Taller()
+        public async Task<IActionResult> Taller([FromQuery] int ps = 8, [FromQuery] int page = 1, [FromQuery] string q = null)
         {
-            return View(_aspNetUser);
+            
+            return View(new ListCarModel
+            {
+                aspNetUser = _aspNetUser,
+                cars = await _carService.GetAllCarsPaged(ps, page, q)
+            });
         }
 
         [HttpGet]

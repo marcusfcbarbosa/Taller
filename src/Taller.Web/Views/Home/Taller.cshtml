@@ -1,25 +1,41 @@
-﻿@model Taller.Core.Identity.IAspNetUser
+﻿@model Taller.Web.Models.ListCarModel
 
-@if (Model.IsAuthenticated())
+@if (Model.aspNetUser.IsAuthenticated())
 {
-    <div class="container col-6">
-        <div class="form-group">
-            <label for="mensagem">Menssage</label>
-            <textarea class="form-control" id="mensagem" rows="2"></textarea>
+    <div class="container col-12">
+        <div class="row">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Make</th>
+                        <th scope="col">Model</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Year</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        foreach (var produto in Model.cars.List.OrderBy(p => p.Model))
+                        {
+                            <tr>
+                                <td>@produto.Id</td>
+                                <td>@produto.Make</td>
+                                <td>@produto.Model</td>
+                                <td>@produto.Price</td>
+                                <td>@produto.Year</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
         </div>
-        <input type="button" class="btn btn-primary" id="send" value="Send" />
-        <a asp-controller="Home" asp-action="Logout" class="btn btn-danger"> Logout</a>
-    </div>
-    <div class="row">
-        <div class="col-12">
-            <hr />
+        <div class="row">
+            <input type="button" class="btn btn-primary" id="send" value="Send" />
+            <a asp-controller="Home" asp-action="Logout" class="btn btn-danger"> Logout</a>
         </div>
-    </div>
-    <div class="container col-6">
-        <ul class="list-group" id="messagesList"></ul>
     </div>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
-
 }
 else
 {
@@ -30,6 +46,6 @@ else
 
 <script type="text/javascript">
     "use strict";
-    
+
 
 </script>
