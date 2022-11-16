@@ -27,15 +27,18 @@ namespace Taller.Api.Commands
             {
                 RuleFor(c => c.Make)
                     .NotEmpty()
+                    .WithMessage("Invalid value Make")
                     .NotNull()
                     .WithMessage("Invalid value Make");
                 RuleFor(c => c.Model)
                     .NotEmpty()
+                    .WithMessage("Invalid value Model")
                     .NotNull()
                     .WithMessage("Invalid value  Model");
 
                 RuleFor(c => c.Color)
                     .NotEmpty()
+                    .WithMessage("Invalid Color value")
                     .NotNull()
                     .WithMessage("Invalid Color value");
 
