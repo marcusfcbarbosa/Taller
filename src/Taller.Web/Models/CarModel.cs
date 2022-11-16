@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using Taller.Api.Entities;
 using Taller.Core.Extensions;
 using Taller.Core.Identity;
@@ -20,4 +21,6 @@ namespace Taller.Web.Models
         public string Color { get;  set; }
         public decimal Price { get;  set; }
     }
+
+    
 }

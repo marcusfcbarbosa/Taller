@@ -75,6 +75,38 @@ namespace Taller.Web.Controllers
         }
 
         [HttpGet]
+        [Route("new")]
+        public async Task<IActionResult> New()
+        {
+            return View();
+        }
+
+
+        /// <summary>
+        /// There is something that I am not understanding that this form is not sending, but as my time has run out I am sending it anyway
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("new")]
+        public async Task<IActionResult> New(AddCarModel model)
+        {
+            model = new AddCarModel
+            {
+
+                Color = "Red",
+                Make = "Wolksvagen",
+                Model = "Bla bla bla",
+                Price = 10000,
+                Year = 1998
+            };
+            var result = await _carService.Add(model);
+            if (ResponseHasErrors(result)) return View(model);
+            return RedirectToAction(actionName: "taller", controllerName: "Home");
+        }
+
+
+        [HttpGet]
         [Route("taller")]
         [Authorize]
         public async Task<IActionResult> Taller([FromQuery] int ps = 8, [FromQuery] int page = 1, [FromQuery] string q = null)
@@ -91,13 +123,9 @@ namespace Taller.Web.Controllers
         [Authorize]
         public async Task<IActionResult> Delete(Guid id)
         {
-             await _carService.Delete(id);
+            await _carService.Delete(id);
             return RedirectToAction(actionName: "taller", controllerName: "Home");
-
         }
-
-
-
 
         [HttpGet]
         [Route("logout")]

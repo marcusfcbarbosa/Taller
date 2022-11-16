@@ -2,10 +2,8 @@
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Taller.Api.Entities;
 using Taller.Core.Communications;
 using Taller.Core.Extensions;
-using Taller.Web.Commands;
 using Taller.Web.Extensions;
 using Taller.Web.Models;
 
@@ -14,7 +12,7 @@ namespace Taller.Web.Services
     public interface ICarService
     {
         Task<PagedResult<CarModel>> GetAllCarsPaged(int pageSize, int pageIndex, string query = null);
-        Task<ResponseResult> Add(AddCarCommand command);
+        Task<ResponseResult> Add(AddCarModel command);
         Task<ResponseResult> Delete(Guid Id);
     }
 
@@ -28,7 +26,7 @@ namespace Taller.Web.Services
             _httpClient.BaseAddress = new Uri(settings.Value.TallerUrl);
         }
 
-        public async Task<ResponseResult> Add(AddCarCommand command)
+        public async Task<ResponseResult> Add(AddCarModel command)
         {
             var content = GetContent(command);
             var response = await _httpClient.PostAsync("/api/cars/create", content);
